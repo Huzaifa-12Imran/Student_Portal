@@ -160,4 +160,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-Built with ❤️ by the Student Portal Team
+Built with ❤️ by Ibrahim Asif, Muhammad Ahmad, Huzaifa Imran.
