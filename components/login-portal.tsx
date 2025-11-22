@@ -36,8 +36,7 @@ export default function LoginPortal({ onLogin }: LoginPortalProps) {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <div className="w-full max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center ribbon-wrapper">
-        {/* Dot field background (behind content) */}
-        <div aria-hidden className="dot-field" />
+        {/* background (plain) */}
         {/* Left: Branding / Illustration */}
         <div className="hidden md:flex flex-col items-start gap-6 p-8 bg-transparent rounded-2xl z-20">
           <div className="flex items-center gap-3">

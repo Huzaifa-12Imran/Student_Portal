@@ -24,6 +24,11 @@
     backdrop-filter: blur(8px);
   }
 
+  /* Solid surface background utility for modals and panels (adapts to dark mode) */
+  .surface-bg {
+    background: var(--color-surface);
+  }
+
   .gradient-text {
     background: linear-gradient(90deg, var(--color-warm), var(--color-cool));
     -webkit-background-clip: text;

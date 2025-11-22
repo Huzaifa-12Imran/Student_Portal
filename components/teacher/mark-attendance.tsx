@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Plus, Trash2, Save } from "lucide-react"
+import { Plus, Trash2, Save, Check, X, Clock } from "lucide-react"
 
 interface AttendanceRecord {
   studentId: string
@@ -73,7 +73,7 @@ export default function MarkAttendance() {
   const lateCount = records.filter((r) => r.status === "late").length
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-in fade-in-0 slide-in-from-bottom-4 duration-500">
       {}
       <div className="bg-card border border-border rounded-lg p-6">
         <h3 className="font-semibold text-foreground mb-4">Mark Attendance</h3>
@@ -145,25 +145,82 @@ export default function MarkAttendance() {
                 <td className="px-6 py-3 text-sm text-foreground">{record.name}</td>
                 <td className="px-6 py-3">
                   <div className="flex gap-2">
-                    {(["present", "absent", "late"] as const).map((status) => (
-                      <button
-                        key={status}
-                        onClick={() => handleStatusChange(record.studentId, status)}
-                        className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
-                          record.status === status
-                            ? status === "present"
-                              ? "bg-accent text-accent-foreground"
-                              : status === "absent"
-                                ? "bg-destructive text-destructive-foreground"
-                                : "bg-chart-3 text-white"
-                            : "bg-input text-muted-foreground hover:bg-border"
-                        }`}
-                      >
-                        {status.charAt(0).toUpperCase() + status.slice(1)}
-                      </button>
-                    ))}
+                      {(["present", "absent", "late"] as const).map((status) => {
+                        const isActive = record.status === status
+                        const common = `inline-flex items-center gap-2 px-3 py-1 rounded text-xs font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2`
+                        const attrs = {
+                          onClick: () => handleStatusChange(record.studentId, status),
+                          'aria-pressed': isActive,
+                          title: status.charAt(0).toUpperCase() + status.slice(1),
+                        }
+
+                        if (status === "present") {
+                          return (
+                            <button
+                              key={status}
+                              {...attrs}
+                              className={
+                                common +
+                                (isActive
+                                  ? " bg-green-950/30 border border-white text-white"
+                                  : " bg-green-950/30 border border-green-700/50 text-green-400 hover:bg-green-950/50")
+                              }
+                            >
+                              <Check className="w-3 h-3" />
+                              Present
+                            </button>
+                          )
+                        }
+
+                        if (status === "absent") {
+                          return (
+                            <button
+                              key={status}
+                              {...attrs}
+                              className={
+                                common +
+                                (isActive
+                                  ? " bg-red-950/30 border border-white text-white"
+                                  : " bg-red-950/30 border border-red-700/50 text-red-400 hover:bg-red-950/50")
+                              }
+                            >
+                              <X className="w-3 h-3" />
+                              Absent
+                            </button>
+                          )
+                        }
+
+                        return (
+                          <button
+                            key={status}
+                            {...attrs}
+                            className={
+                              common +
+                              (isActive
+                                ? " bg-yellow-950/30 border border-white text-white"
+                                : " bg-yellow-950/30 border border-yellow-700/50 text-yellow-400 hover:bg-yellow-950/50")
+                            }
+                          >
+                            <Clock className="w-3 h-3" />
+                            Late
+                          </button>
+                        )
+                      })}
                   </div>
                 </td>
+                  <td className="px-6 py-3">
+                    <span
+                      className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                        record.status === "present"
+                          ? "bg-green-600/10 text-green-600"
+                          : record.status === "absent"
+                          ? "bg-red-600/10 text-red-600"
+                          : "bg-yellow-500/10 text-yellow-600"
+                      }`}
+                    >
+                      {record.status.charAt(0).toUpperCase() + record.status.slice(1)}
+                    </span>
+                  </td>
                 <td className="px-6 py-3">
                   <button
                     onClick={() => handleDelete(record.studentId)}

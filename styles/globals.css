@@ -144,3 +144,33 @@
     outline-offset: 2px;
   }
 }
+
+@layer components {
+  .glass {
+    @apply bg-white/10 dark:bg-white/10 backdrop-blur-xl border border-white/20 dark:border-white/20;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent;
+  }
+
+  input::placeholder {
+    @apply text-muted-foreground;
+  }
+
+  textarea::placeholder {
+    @apply text-muted-foreground;
+  }
+
+  select {
+    @apply text-foreground bg-white/5 dark:bg-white/5 border-white/15;
+  }
+
+  .dark input:not([type="checkbox"]):not([type="radio"]) {
+    @apply text-foreground;
+  }
+
+  .dark textarea {
+    @apply text-foreground;
+  }
+}

@@ -63,6 +63,57 @@ export default function TeacherDashboard({ userName, onLogout }: TeacherDashboar
 
               {}
               <div className="mt-8">
+                <h3 className="text-lg font-semibold text-foreground mb-4">Quick Actions</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <button
+                    onClick={() => setActiveTab("attendance")}
+                    className={`rounded-lg p-6 transition-colors text-left group ${
+                      activeTab === "attendance"
+                        ? "bg-primary/10 border-primary border-2"
+                        : "bg-card border border-border hover:border-primary hover:text-white"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <Clock className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+                      <h4 className="font-semibold text-foreground">Mark Attendance</h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Take attendance for your classes</p>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab("marks")}
+                    className={`rounded-lg p-6 transition-colors text-left group ${
+                      activeTab === "marks"
+                        ? "bg-primary/10 border-primary border-2"
+                        : "bg-card border border-border hover:border-primary hover:text-white"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <BookOpen className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+                      <h4 className="font-semibold text-foreground">Upload Marks</h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Enter and manage student grades</p>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab("performance")}
+                    className={`rounded-lg p-6 transition-colors text-left group ${
+                      activeTab === "performance"
+                        ? "bg-primary/10 border-primary border-2"
+                        : "bg-card border border-border hover:border-primary hover:text-white"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <Users className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+                      <h4 className="font-semibold text-foreground">View Performance</h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Check class performance analytics</p>
+                  </button>
+                </div>
+              </div>
+
+              {}
+              <div className="mt-8">
                 <h3 className="text-lg font-semibold text-foreground mb-4">My Courses</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {[
@@ -78,7 +129,42 @@ export default function TeacherDashboard({ userName, onLogout }: TeacherDashboar
                           Section {course.section}
                         </span>
                       </div>
-                      <p className="text-sm text-muted-foreground">{course.students} students enrolled</p>
+                      <p className="text-sm text-muted-foreground mb-4">{course.students} students enrolled</p>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setActiveTab("attendance")}
+                          className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs rounded transition-colors ${
+                            activeTab === "attendance"
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-primary/10 hover:border-primary hover:text-white text-primary"
+                          }`}
+                        >
+                          <Clock className="w-3 h-3" />
+                          Attendance
+                        </button>
+                        <button
+                          onClick={() => setActiveTab("marks")}
+                          className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs rounded transition-colors ${
+                            activeTab === "marks"
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-primary/10 hover:border-primary hover:text-white text-primary"
+                          }`}
+                        >
+                          <BookOpen className="w-3 h-3" />
+                          Marks
+                        </button>
+                        <button
+                          onClick={() => setActiveTab("performance")}
+                          className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs rounded transition-colors ${
+                            activeTab === "performance"
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-primary/10 hover:border-primary hover:text-white text-primary"
+                          }`}
+                        >
+                          <Users className="w-3 h-3" />
+                          Performance
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>

@@ -50,12 +50,14 @@
   }
 }
 
-/* dark mode overrides (keeps the warm/cool balance but darker surfaces) */
+/* dark mode overrides - ensures high contrast for dark theme */
 .dark {
   --color-bg: #0b0f13;
   --color-surface: #071021;
   --color-muted: #9AA3B2;
-  --color-text: #E6EEF8;
+  --color-text: #F0F4F8;
+  --color-warm: #FF8B5F;
+  --color-cool: #3B9EFF;
 }
 
 /* Utility tokens for components */
@@ -171,24 +173,6 @@
 }
 
 .dot-field {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  background-image:
-    radial-gradient(circle, rgba(0,0,0,0.16) 1px, transparent 1px),
-    radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px);
-  background-size: 18px 18px, 24px 24px;
-  background-position: 0 0, 10px 14px;
-  opacity: 0.9;
-  filter: blur(0.2px);
-  mix-blend-mode: normal;
-  transform-origin: center;
-  animation: dotDrift 12s var(--motion-ease) infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dot-field { animation: none; }
+  /* Dot background disabled — plain background restored */
+  display: none !important;
 }

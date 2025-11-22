@@ -12,7 +12,7 @@ export default function ClassPerformance() {
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-in fade-in-0 slide-in-from-bottom-4 duration-500">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {}
         <div className="bg-card border border-border rounded-lg p-6">

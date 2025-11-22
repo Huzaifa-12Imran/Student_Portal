@@ -34,32 +34,33 @@ export default function UserManagement() {
   ])
 
   const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [newUser, setNewUser] = useState({ name: "", email: "", role: "student" as const, department: "" })
 
   const handleAddUser = () => {
     if (newUser.name && newUser.email) {
-      setUsers([
-        ...users,
-        {
-          id: String(users.length + 1),
-          ...newUser,
-          status: "active",
-        },
-      ])
-      setNewUser({ name: "", email: "", role: "student", department: "" })
-      setShowForm(false)
-      localStorage.setItem(
-        "users",
-        JSON.stringify([
+      if (editingId) {
+        setUsers(users.map(u => u.id === editingId ? { ...u, ...newUser } : u))
+        setEditingId(null)
+      } else {
+        setUsers([
           ...users,
           {
             id: String(users.length + 1),
             ...newUser,
             status: "active",
           },
-        ]),
-      )
+        ])
+      }
+      setNewUser({ name: "", email: "", role: "student", department: "" })
+      setShowForm(false)
     }
+  }
+
+  const handleEditUser = (user: User) => {
+    setNewUser({ name: user.name, email: user.email, role: user.role, department: user.department })
+    setEditingId(user.id)
+    setShowForm(true)
   }
 
   const handleDeleteUser = (id: string) => {
@@ -71,7 +72,13 @@ export default function UserManagement() {
       {}
       <div className="flex justify-end">
         <button
-          onClick={() => setShowForm(!showForm)}
+          onClick={() => {
+            setShowForm(!showForm)
+            if (!showForm) {
+              setEditingId(null)
+              setNewUser({ name: "", email: "", role: "student", department: "" })
+            }
+          }}
           className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium transition-colors flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />
@@ -82,7 +89,7 @@ export default function UserManagement() {
       {}
       {showForm && (
         <div className="bg-card border border-border rounded-lg p-6">
-          <h3 className="font-semibold text-foreground mb-4">Add New User</h3>
+          <h3 className="font-semibold text-foreground mb-4">{editingId ? "Edit User" : "Add New User"}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <input
               type="text"
@@ -120,10 +127,10 @@ export default function UserManagement() {
               onClick={handleAddUser}
               className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium transition-colors"
             >
-              Save User
+              {editingId ? "Update User" : "Save User"}
             </button>
             <button
-              onClick={() => setShowForm(false)}
+              onClick={() => { setShowForm(false); setEditingId(null); setNewUser({ name: "", email: "", role: "student", department: "" }) }}
               className="px-4 py-2 bg-input border border-border text-foreground rounded-lg font-medium hover:bg-border transition-colors"
             >
               Cancel
@@ -172,7 +179,7 @@ export default function UserManagement() {
                   </span>
                 </td>
                 <td className="px-6 py-3 text-sm flex gap-2">
-                  <button className="p-1 text-muted-foreground hover:text-primary transition-colors">
+                  <button onClick={() => handleEditUser(user)} className="p-1 text-muted-foreground hover:text-primary transition-colors">
                     <Edit2 className="w-4 h-4" />
                   </button>
                   <button

@@ -45,6 +45,7 @@ export default function CourseManagement() {
   ])
 
   const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [newCourse, setNewCourse] = useState({ code: "", name: "", instructor: "", section: "A", students: 0 })
 
   const handleAddCourse = () => {
@@ -52,21 +53,32 @@ export default function CourseManagement() {
       alert("Please enter course code and name")
       return
     }
-    const next: Course = {
-      id: String(courses.length + 1),
-      code: newCourse.code,
-      name: newCourse.name,
-      instructor: newCourse.instructor || "TBA",
-      students: Number(newCourse.students) || 0,
-      section: newCourse.section || "A",
-      status: "active",
+    if (editingId) {
+      setCourses((c) => c.map((x) => x.id === editingId ? { ...x, code: newCourse.code, name: newCourse.name, instructor: newCourse.instructor || "TBA", students: Number(newCourse.students) || 0, section: newCourse.section || "A" } : x))
+      setEditingId(null)
+    } else {
+      const next: Course = {
+        id: String(courses.length + 1),
+        code: newCourse.code,
+        name: newCourse.name,
+        instructor: newCourse.instructor || "TBA",
+        students: Number(newCourse.students) || 0,
+        section: newCourse.section || "A",
+        status: "active",
+      }
+      setCourses((c) => [next, ...c])
+      try {
+        localStorage.setItem("courses", JSON.stringify([next, ...courses]))
+      } catch {}
     }
-    setCourses((c) => [next, ...c])
     setNewCourse({ code: "", name: "", instructor: "", section: "A", students: 0 })
     setShowForm(false)
-    try {
-      localStorage.setItem("courses", JSON.stringify([next, ...courses]))
-    } catch {}
+  }
+
+  const handleEditCourse = (course: Course) => {
+    setNewCourse({ code: course.code, name: course.name, instructor: course.instructor, section: course.section, students: course.students })
+    setEditingId(course.id)
+    setShowForm(true)
   }
 
   const handleDeleteCourse = (id: string) => {
@@ -79,7 +91,13 @@ export default function CourseManagement() {
       {}
       <div className="flex justify-end">
         <button
-          onClick={() => setShowForm(!showForm)}
+          onClick={() => {
+            setShowForm(!showForm)
+            if (!showForm) {
+              setEditingId(null)
+              setNewCourse({ code: "", name: "", instructor: "", section: "A", students: 0 })
+            }
+          }}
           className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium transition-colors flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />
@@ -90,7 +108,7 @@ export default function CourseManagement() {
       {}
       {showForm && (
         <div className="bg-card border border-border rounded-lg p-6 mb-4">
-          <h3 className="font-semibold text-foreground mb-4">Add New Course</h3>
+          <h3 className="font-semibold text-foreground mb-4">{editingId ? "Edit Course" : "Add New Course"}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <input
               type="text"
@@ -123,9 +141,9 @@ export default function CourseManagement() {
           </div>
           <div className="flex gap-2">
             <button onClick={handleAddCourse} className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium transition-colors">
-              Save Course
+              {editingId ? "Update Course" : "Save Course"}
             </button>
-            <button onClick={() => setShowForm(false)} className="px-4 py-2 bg-input border border-border text-foreground rounded-lg font-medium hover:bg-border transition-colors">
+            <button onClick={() => { setShowForm(false); setEditingId(null); setNewCourse({ code: "", name: "", instructor: "", section: "A", students: 0 }) }} className="px-4 py-2 bg-input border border-border text-foreground rounded-lg font-medium hover:bg-border transition-colors">
               Cancel
             </button>
           </div>
@@ -157,7 +175,7 @@ export default function CourseManagement() {
                   <span className="px-3 py-1 rounded text-xs font-medium bg-accent/10 text-accent">Active</span>
                 </td>
                 <td className="px-6 py-3 text-sm flex gap-2">
-                  <button className="p-1 text-muted-foreground hover:text-primary transition-colors" aria-label={`Edit ${course.code}`}>
+                  <button onClick={() => handleEditCourse(course)} className="p-1 text-muted-foreground hover:text-primary transition-colors" aria-label={`Edit ${course.code}`}>
                     <Edit2 className="w-4 h-4" />
                   </button>
                   <button onClick={() => handleDeleteCourse(course.id)} className="p-1 text-muted-foreground hover:text-destructive transition-colors" aria-label={`Delete ${course.code}`}>

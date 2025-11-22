@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button"
 import MarkAttendance from "@/components/teacher/mark-attendance"
 import UploadMarks from "@/components/teacher/upload-marks"
 import ClassPerformance from "@/components/teacher/class-performance"
+import VerifyResults from "@/components/teacher/verify-results"
 
 const classPerformance = [
   { class: "CS-101", students: 45, avgGrade: 78 },
@@ -76,18 +77,22 @@ export default function ModernTeacherDashboard({ userName, onLogout }: TeacherDa
         {}
         <div className="grid md:grid-cols-4 gap-4">
           {[
-            { icon: Users, label: "Mark Attendance", color: "from-primary to-secondary" },
-            { icon: BookOpen, label: "Upload Marks", color: "from-secondary to-accent" },
-            { icon: TrendingUp, label: "View Performance", color: "from-accent to-primary" },
-            { icon: CheckCircle2, label: "Verify Results", color: "from-purple-500 to-pink-500" },
-          ].map(({ icon: Icon, label, color }, i) => (
-            <button key={i} onClick={() => openPanelForLabel(label)} className={`glass rounded-xl p-6 group hover:border-white/20 transition-all`}>
+            { icon: Users, label: "Mark Attendance", color: "from-primary to-secondary", bg: "from-blue-500/20 to-purple-500/10", border: "border-blue-500", text: "text-blue-500" },
+            { icon: BookOpen, label: "Upload Marks", color: "from-secondary to-accent", bg: "from-purple-500/20 to-orange-500/10", border: "border-purple-500", text: "text-purple-500" },
+            { icon: TrendingUp, label: "View Performance", color: "from-accent to-primary", bg: "from-orange-500/20 to-blue-500/10", border: "border-orange-500", text: "text-orange-500" },
+            { icon: CheckCircle2, label: "Verify Results", color: "from-green-600 to-green-500", bg: "from-green-500/20 to-green-600/10", border: "border-green-500", text: "text-green-500" },
+          ].map(({ icon: Icon, label, color, bg, border, text }, i) => (
+            <button key={i} onClick={() => openPanelForLabel(label)} className={`rounded-xl p-6 group hover:border-white/20 transition-all bg-gradient-to-b ${bg} border ${border}`}>
               <div
-                className={`w-12 h-12 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}
+                className={
+                  label === "Verify Results"
+                    ? "w-12 h-12 flex items-center justify-center mb-3"
+                    : `w-12 h-12 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`
+                }
               >
                 <Icon className="w-6 h-6 text-white" />
               </div>
-              <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+              <p className={`text-sm font-semibold ${text} group-hover:text-primary transition-colors`}>
                 {label}
               </p>
             </button>
@@ -105,35 +110,30 @@ export default function ModernTeacherDashboard({ userName, onLogout }: TeacherDa
         {panel === "attendance" && <MarkAttendance />}
         {panel === "marks" && <UploadMarks />}
         {panel === "performance" && <ClassPerformance />}
-        {panel === "verify" && (
-          <div className="glass rounded-2xl p-8">
-            <h3 className="text-lg font-bold text-foreground mb-4">Verify Results</h3>
-            <p className="text-muted-foreground">Use the Verify Results panel to confirm result integrity and publish approvals. (Placeholder)</p>
-          </div>
-        )}
+        {panel === "verify" && <VerifyResults />}
 
         {}
         <div className="grid md:grid-cols-3 gap-6">
-          <div className="glass rounded-2xl p-6">
+          <div className="rounded-2xl p-6 bg-gradient-to-b from-white/8 to-white/5 border border-cyan-500/30 hover:border-cyan-500/60 transition-all">
             <p className="text-muted-foreground text-sm font-semibold mb-2">Total Students</p>
             <div className="text-4xl font-bold text-foreground">165</div>
-            <p className="text-sm text-secondary mt-2">Across 4 courses</p>
+            <p className="text-sm text-cyan-400 mt-2">Across 4 courses</p>
           </div>
-          <div className="glass rounded-2xl p-6">
+          <div className="rounded-2xl p-6 bg-gradient-to-b from-white/8 to-white/5 border border-green-500/30 hover:border-green-500/60 transition-all">
             <p className="text-muted-foreground text-sm font-semibold mb-2">Attendance Mark</p>
-            <div className="text-4xl font-bold text-secondary">87%</div>
+            <div className="text-4xl font-bold text-foreground">87%</div>
             <p className="text-sm text-green-400 mt-2">+5% from last week</p>
           </div>
-          <div className="glass rounded-2xl p-6">
+          <div className="rounded-2xl p-6 bg-gradient-to-b from-white/8 to-white/5 border border-orange-500/30 hover:border-orange-500/60 transition-all">
             <p className="text-muted-foreground text-sm font-semibold mb-2">Pending Reviews</p>
-            <div className="text-4xl font-bold text-accent">12</div>
-            <p className="text-sm text-muted-foreground mt-2">Grade submissions awaiting review</p>
+            <div className="text-4xl font-bold text-foreground">12</div>
+            <p className="text-sm text-orange-400 mt-2">Grade submissions awaiting review</p>
           </div>
         </div>
 
         {}
         <div className="grid md:grid-cols-2 gap-6">
-          <div className="glass rounded-2xl p-8">
+          <div className="rounded-2xl p-8 bg-gradient-to-b from-white/8 to-white/5 border border-white/15">
             <h3 className="text-lg font-bold text-foreground mb-6">Class Performance</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={classPerformance}>
@@ -148,7 +148,7 @@ export default function ModernTeacherDashboard({ userName, onLogout }: TeacherDa
             </ResponsiveContainer>
           </div>
 
-          <div className="glass rounded-2xl p-8">
+          <div className="rounded-2xl p-8 bg-gradient-to-b from-white/8 to-white/5 border border-white/15">
             <h3 className="text-lg font-bold text-foreground mb-6">Attendance vs Grade Correlation</h3>
             <ResponsiveContainer width="100%" height={300}>
               <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
@@ -172,7 +172,7 @@ export default function ModernTeacherDashboard({ userName, onLogout }: TeacherDa
         </div>
 
         {}
-        <div className="glass rounded-2xl p-8">
+        <div className="rounded-2xl p-8 bg-gradient-to-b from-white/8 to-white/5 border border-white/15">
           <h3 className="text-lg font-bold text-foreground mb-6">Your Classes</h3>
           <div className="space-y-4">
             {classPerformance.map((cls) => (
