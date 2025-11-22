@@ -36,18 +36,25 @@ export default function LoginPortal({ onLogin }: LoginPortalProps) {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <div className="w-full max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center ribbon-wrapper">
-        {/* Gradient ribbon (behind content) */}
-        <div aria-hidden className="gradient-ribbon">
-          <svg width="100%" height="100%" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        {/* Particles background (behind content) */}
+        <div aria-hidden className="particles">
+          <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="g1" x1="0%" x2="100%" y1="0%" y2="0%">
-                <stop offset="0%" stopColor="rgba(216,106,73,0.85)" />
-                <stop offset="50%" stopColor="rgba(43,138,247,0.85)" />
-                <stop offset="100%" stopColor="rgba(216,106,73,0.75)" />
-              </linearGradient>
+              <radialGradient id="p1" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#2B8AF7" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#2B8AF7" stopOpacity="0" />
+              </radialGradient>
+              <radialGradient id="p2" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#D86A49" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#D86A49" stopOpacity="0" />
+              </radialGradient>
             </defs>
-            <path d="M0 120 C200 20, 400 240, 600 140 C800 40, 1000 220, 1200 120 L1200 300 L0 300 Z" fill="url(#g1)" />
-            <path d="M0 140 C200 40, 400 260, 600 160 C800 60, 1000 240, 1200 140 L1200 300 L0 300 Z" fill="url(#g1)" opacity="0.55" />
+            <circle cx="200" cy="120" r="36" fill="url(#p1)" />
+            <circle cx="420" cy="80" r="28" fill="url(#p2)" />
+            <circle cx="640" cy="140" r="44" fill="url(#p1)" />
+            <circle cx="860" cy="110" r="30" fill="url(#p2)" />
+            <circle cx="1040" cy="150" r="22" fill="url(#p1)" />
+            <circle cx="520" cy="40" r="18" fill="url(#p2)" />
           </svg>
         </div>
         {/* Left: Branding / Illustration */}

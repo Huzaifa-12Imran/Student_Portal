@@ -23,18 +23,25 @@ export default function ModernLogin({ onLogin }: ModernLoginProps) {
   if (!selectedRole) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-background overflow-hidden relative ribbon-wrapper">
-        {/* Gradient ribbon behind content */}
-        <div aria-hidden className="gradient-ribbon">
-          <svg width="100%" height="100%" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        {/* Particles background (behind content) */}
+        <div aria-hidden className="particles">
+          <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="mg1" x1="0%" x2="100%" y1="0%" y2="0%">
-                <stop offset="0%" stopColor="#D86A49" />
-                <stop offset="50%" stopColor="#2B8AF7" />
-                <stop offset="100%" stopColor="#D86A49" />
-              </linearGradient>
+              <radialGradient id="pm1" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#2B8AF7" stopOpacity="0.16" />
+                <stop offset="100%" stopColor="#2B8AF7" stopOpacity="0" />
+              </radialGradient>
+              <radialGradient id="pm2" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#D86A49" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#D86A49" stopOpacity="0" />
+              </radialGradient>
             </defs>
-            <path d="M0 120 C200 20, 400 240, 600 140 C800 40, 1000 220, 1200 120 L1200 300 L0 300 Z" fill="url(#mg1)" />
-            <path d="M0 140 C200 40, 400 260, 600 160 C800 60, 1000 240, 1200 140 L1200 300 L0 300 Z" fill="url(#mg1)" opacity="0.6" />
+            <circle cx="220" cy="110" r="34" fill="url(#pm1)" />
+            <circle cx="430" cy="70" r="26" fill="url(#pm2)" />
+            <circle cx="655" cy="150" r="40" fill="url(#pm1)" />
+            <circle cx="880" cy="120" r="28" fill="url(#pm2)" />
+            <circle cx="1030" cy="160" r="20" fill="url(#pm1)" />
+            <circle cx="520" cy="50" r="16" fill="url(#pm2)" />
           </svg>
         </div>
 
