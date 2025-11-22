@@ -37,7 +37,7 @@ export default function LoginPortal({ onLogin }: LoginPortalProps) {
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <div className="w-full max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center ribbon-wrapper">
         {/* Gradient ribbon (behind content) */}
-        <div aria-hidden className="gradient-ribbon" />
+        <div aria-hidden className="gradient-ribbon">
           <svg width="100%" height="100%" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="g1" x1="0%" x2="100%" y1="0%" y2="0%">
@@ -77,7 +77,7 @@ export default function LoginPortal({ onLogin }: LoginPortalProps) {
           <div className="text-center mb-6 animate-fade-up" style={{ animationDelay: '60ms' }}>
             <div className="flex justify-center mb-4">
               <div className="p-3 bg-white rounded-lg border border-gray-100">
-                <BookOpen className="w-8 h-8 text-warm-800" />
+                <BookOpen className="w-8 h-8" style={{ color: 'var(--color-warm)' }} />
               </div>
             </div>
             <h1 className="text-2xl font-bold text-foreground mb-1">Sign in to Academic Portal</h1>
