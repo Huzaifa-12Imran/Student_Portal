@@ -58,9 +58,9 @@ export default function LoginPortal({ onLogin }: LoginPortalProps) {
         </div>
 
         {/* Right: Card */}
-        <div className="bg-surface rounded-2xl p-8 shadow-md theme-shadow border border-gray-100">
+        <div className="bg-white rounded-2xl p-8 shadow-md theme-shadow border border-gray-100">
         {}
-          <div className="text-center mb-6">
+          <div className="text-center mb-6 animate-fade-up" style={{ animationDelay: '60ms' }}>
             <div className="flex justify-center mb-4">
               <div className="p-3 bg-white rounded-lg border border-gray-100">
                 <BookOpen className="w-8 h-8 text-warm-800" />
@@ -73,10 +73,34 @@ export default function LoginPortal({ onLogin }: LoginPortalProps) {
         {}
           <div className="mb-6">
             <label className="block text-sm font-semibold text-foreground mb-3">Select Your Role</label>
-            <div className="flex gap-3">
-              <RoleButton label="Student" roleKey="student" selected={selectedRole === 'student'} onClick={() => setSelectedRole('student')} icon="👩‍🎓" />
-              <RoleButton label="Teacher" roleKey="teacher" selected={selectedRole === 'teacher'} onClick={() => setSelectedRole('teacher')} icon="👨‍🏫" />
-              <RoleButton label="Admin" roleKey="admin" selected={selectedRole === 'admin'} onClick={() => setSelectedRole('admin')} icon="⚙️" />
+            <div className="flex gap-4 justify-center">
+              <div className="w-60 animate-fade-up" style={{ animationDelay: '100ms' }}>
+                <RoleCard
+                  title="Student"
+                  desc="View attendance & grades"
+                  icon="🎓"
+                  selected={selectedRole === 'student'}
+                  onClick={() => setSelectedRole('student')}
+                />
+              </div>
+              <div className="w-60 animate-fade-up" style={{ animationDelay: '160ms' }}>
+                <RoleCard
+                  title="Teacher"
+                  desc="Mark attendance & upload marks"
+                  icon="🧑‍🏫"
+                  selected={selectedRole === 'teacher'}
+                  onClick={() => setSelectedRole('teacher')}
+                />
+              </div>
+              <div className="w-60 animate-fade-up" style={{ animationDelay: '220ms' }}>
+                <RoleCard
+                  title="Administrator"
+                  desc="System management"
+                  icon="⚙️"
+                  selected={selectedRole === 'admin'}
+                  onClick={() => setSelectedRole('admin')}
+                />
+              </div>
             </div>
           </div>
 
@@ -160,5 +184,22 @@ function RoleButton({ label, roleKey, selected, onClick, icon }: { label: string
       <div className="text-2xl">{icon}</div>
       <div className="text-sm font-medium">{label}</div>
     </button>
+  )
+}
+
+function RoleCard({ title, desc, icon, selected, onClick }: { title: string; desc: string; icon: string; selected: boolean; onClick: () => void }) {
+  return (
+    <div onClick={onClick} className={`card-hover p-4 rounded-xl bg-white border ${selected ? 'ring-2 ring-warm-600' : 'border-gray-100'} cursor-pointer` }>
+      <div className="flex items-start gap-3">
+        <div className="w-12 h-12 rounded-md bg-gray-50 flex items-center justify-center text-2xl">{icon}</div>
+        <div>
+          <div className="text-base font-semibold text-foreground">{title}</div>
+          <div className="text-sm text-muted mt-1">{desc}</div>
+        </div>
+      </div>
+      <div className="mt-4 text-right">
+        <span className="text-sm text-cool-600">Select →</span>
+      </div>
+    </div>
   )
 }

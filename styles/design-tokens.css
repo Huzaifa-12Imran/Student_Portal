@@ -62,3 +62,25 @@
 .theme-shadow {
   box-shadow: var(--surface-elev-2);
 }
+
+/* small entrance animation used by login cards */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation-name: fadeUp;
+  animation-duration: var(--motion-medium);
+  animation-timing-function: var(--motion-ease);
+  animation-fill-mode: both;
+}
+
+/* subtle hover lift used on role cards */
+.card-hover {
+  transition: transform var(--motion-fast) var(--motion-ease), box-shadow var(--motion-fast) var(--motion-ease);
+}
+.card-hover:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 10px 30px rgba(16,24,40,0.08);
+}
