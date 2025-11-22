@@ -1,5 +1,5 @@
 "use client"
-import { BookOpen, ChevronRight } from "lucide-react"
+import { BookOpen, ChevronRight, LogOut } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
 interface SidebarItem {
@@ -17,7 +17,7 @@ interface SidebarProps {
   onLogout: () => void
 }
 
-export default function Sidebar({ role, userName, items, activeTab, onTabChange }: SidebarProps) {
+export default function Sidebar({ role, userName, items, activeTab, onTabChange, onLogout }: SidebarProps) {
   return (
     <aside className="w-64 bg-sidebar border-r border-sidebar-border h-screen flex flex-col">
       {}
@@ -68,7 +68,14 @@ export default function Sidebar({ role, userName, items, activeTab, onTabChange 
       </nav>
 
       {}
-      <div className="p-6 border-t border-sidebar-border">
+      <div className="p-6 border-t border-sidebar-border space-y-3">
+        <button
+          onClick={onLogout}
+          className="w-full px-4 py-3 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-3 text-sidebar-foreground hover:bg-sidebar-accent/20"
+        >
+          <LogOut className="w-4 h-4" />
+          <span>Logout</span>
+        </button>
         <p className="text-xs text-sidebar-foreground/60 text-center">v1.0 • Student Portal</p>
       </div>
     </aside>

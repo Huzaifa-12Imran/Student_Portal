@@ -87,8 +87,12 @@ export default function CourseManagement() {
   }
 
   return (
-    <div className="space-y-6">
-      {}
+    <div className="space-y-6 animate-in fade-in-0 slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl p-8">
+      <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-700/50 mb-2">
+        <h2 className="text-2xl font-bold text-white mb-1">Course Management</h2>
+        <p className="text-slate-400 text-sm">Manage all courses and their information</p>
+      </div>
+
       <div className="flex justify-end">
         <button
           onClick={() => {
@@ -98,87 +102,86 @@ export default function CourseManagement() {
               setNewCourse({ code: "", name: "", instructor: "", section: "A", students: 0 })
             }
           }}
-          className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-lg font-medium transition-all flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />
           Add New Course
         </button>
       </div>
 
-      {}
       {showForm && (
-        <div className="bg-card border border-border rounded-lg p-6 mb-4">
-          <h3 className="font-semibold text-foreground mb-4">{editingId ? "Edit Course" : "Add New Course"}</h3>
+        <div className="bg-slate-800/50 border border-slate-700/30 rounded-lg p-6 mb-4">
+          <h3 className="font-semibold text-white mb-4">{editingId ? "Edit Course" : "Add New Course"}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <input
               type="text"
               placeholder="Course Code (e.g. CS101)"
               value={newCourse.code}
               onChange={(e) => setNewCourse({ ...newCourse, code: e.target.value })}
-              className="px-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary"
+              className="px-4 py-2 bg-slate-700/30 border border-slate-600/30 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <input
               type="text"
               placeholder="Course Name"
               value={newCourse.name}
               onChange={(e) => setNewCourse({ ...newCourse, name: e.target.value })}
-              className="px-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary"
+              className="px-4 py-2 bg-slate-700/30 border border-slate-600/30 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <input
               type="text"
               placeholder="Instructor"
               value={newCourse.instructor}
               onChange={(e) => setNewCourse({ ...newCourse, instructor: e.target.value })}
-              className="px-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary"
+              className="px-4 py-2 bg-slate-700/30 border border-slate-600/30 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <input
               type="number"
               placeholder="Students"
               value={String(newCourse.students)}
               onChange={(e) => setNewCourse({ ...newCourse, students: Number(e.target.value) })}
-              className="px-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary"
+              className="px-4 py-2 bg-slate-700/30 border border-slate-600/30 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           <div className="flex gap-2">
-            <button onClick={handleAddCourse} className="px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium transition-colors">
+            <button onClick={handleAddCourse} className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-lg font-medium transition-all">
               {editingId ? "Update Course" : "Save Course"}
             </button>
-            <button onClick={() => { setShowForm(false); setEditingId(null); setNewCourse({ code: "", name: "", instructor: "", section: "A", students: 0 }) }} className="px-4 py-2 bg-input border border-border text-foreground rounded-lg font-medium hover:bg-border transition-colors">
+            <button onClick={() => { setShowForm(false); setEditingId(null); setNewCourse({ code: "", name: "", instructor: "", section: "A", students: 0 }) }} className="px-4 py-2 bg-slate-700/30 border border-slate-600/30 text-slate-300 rounded-lg font-medium hover:bg-slate-700/50 transition-all">
               Cancel
             </button>
           </div>
         </div>
       )}
 
-      <div className="bg-card border border-border rounded-lg overflow-x-auto">
+      <div className="bg-slate-800/50 border border-slate-700/30 rounded-lg overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-border">
-              <th className="px-6 py-3 text-left text-xs font-semibold text-muted-foreground">Code</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-muted-foreground">Course Name</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-muted-foreground">Instructor</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-muted-foreground">Section</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-muted-foreground">Students</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-muted-foreground">Status</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-muted-foreground">Actions</th>
+            <tr className="border-b border-slate-700/30">
+              <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400">Code</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400">Course Name</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400">Instructor</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400">Section</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400">Students</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400">Actions</th>
             </tr>
           </thead>
           <tbody>
             {courses.map((course) => (
-              <tr key={course.id} className="border-b border-border hover:bg-background/50">
-                <td className="px-6 py-3 text-sm font-semibold text-foreground">{course.code}</td>
-                <td className="px-6 py-3 text-sm text-foreground">{course.name}</td>
-                <td className="px-6 py-3 text-sm text-muted-foreground">{course.instructor}</td>
-                <td className="px-6 py-3 text-sm text-foreground">{course.section}</td>
-                <td className="px-6 py-3 text-sm text-foreground font-medium">{course.students}</td>
+              <tr key={course.id} className="border-b border-slate-700/30 hover:bg-slate-700/20 transition-colors">
+                <td className="px-6 py-3 text-sm font-semibold text-blue-400">{course.code}</td>
+                <td className="px-6 py-3 text-sm text-white">{course.name}</td>
+                <td className="px-6 py-3 text-sm text-slate-400">{course.instructor}</td>
+                <td className="px-6 py-3 text-sm text-slate-300">{course.section}</td>
+                <td className="px-6 py-3 text-sm text-white font-medium">{course.students}</td>
                 <td className="px-6 py-3 text-sm">
-                  <span className="px-3 py-1 rounded text-xs font-medium bg-accent/10 text-accent">Active</span>
+                  <span className="px-3 py-1 rounded text-xs font-medium bg-green-500/20 border border-green-500/30 text-green-400">Active</span>
                 </td>
                 <td className="px-6 py-3 text-sm flex gap-2">
-                  <button onClick={() => handleEditCourse(course)} className="p-1 text-muted-foreground hover:text-primary transition-colors" aria-label={`Edit ${course.code}`}>
+                  <button onClick={() => handleEditCourse(course)} className="p-1 text-slate-400 hover:text-blue-400 transition-colors" aria-label={`Edit ${course.code}`}>
                     <Edit2 className="w-4 h-4" />
                   </button>
-                  <button onClick={() => handleDeleteCourse(course.id)} className="p-1 text-muted-foreground hover:text-destructive transition-colors" aria-label={`Delete ${course.code}`}>
+                  <button onClick={() => handleDeleteCourse(course.id)} className="p-1 text-slate-400 hover:text-red-400 transition-colors" aria-label={`Delete ${course.code}`}>
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </td>

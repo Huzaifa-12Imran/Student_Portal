@@ -13,8 +13,9 @@ import {
   Pie,
   Cell,
 } from "recharts"
-import { Users, Zap, TrendingUp, AlertTriangle, LogOut, Settings } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Users, Zap, TrendingUp, AlertTriangle, Settings } from "lucide-react"
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
 import UserManagement from "./admin/user-management"
 import CourseManagement from "./admin/course-management"
 import SystemReports from "./admin/system-reports"
@@ -46,34 +47,35 @@ export default function ModernAdminDashboard({ userName, onLogout }: AdminDashbo
   const closeModal = () => setModal(null)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background">
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-accent/15 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-primary/15 rounded-full blur-3xl animate-pulse animation-delay-2000" />
-        </div>
-
-        <div className="relative z-10 px-6 py-12 border-b border-border">
-          <div className="max-w-7xl mx-auto flex justify-between items-start">
-            <div>
-              <h1 className="text-4xl font-bold gradient-text mb-2">System Administration</h1>
-              <p className="text-muted-foreground">Monitor and manage the entire platform</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="rounded-lg bg-transparent" onClick={() => openModal("settings")}>
-                <Settings className="w-4 h-4 mr-2" />
-                Settings
-              </Button>
-              <Button variant="outline" size="sm" onClick={onLogout} className="rounded-lg bg-transparent">
-                <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
-              </Button>
-            </div>
+    <SidebarProvider>
+      <AppSidebar userRole="admin" userName={userName} onLogout={onLogout} />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <div className="h-4 w-px bg-sidebar-border" />
+            <h1 className="text-xl font-bold">Admin Dashboard</h1>
           </div>
-        </div>
-      </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <div className="min-h-screen bg-gradient-to-br from-background via-background to-background">
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-0">
+                <div className="absolute -top-40 -right-40 w-96 h-96 bg-accent/15 rounded-full blur-3xl animate-pulse" />
+                <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-primary/15 rounded-full blur-3xl animate-pulse animation-delay-2000" />
+              </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-12 space-y-8">
+              <div className="relative z-10 px-6 py-12 border-b border-border">
+                <div className="max-w-7xl mx-auto">
+                  <div>
+                    <h1 className="text-4xl font-bold gradient-text mb-2">System Administration</h1>
+                    <p className="text-muted-foreground">Monitor and manage the entire platform</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-6 py-12 space-y-8">
         {}
         <div className="grid md:grid-cols-4 gap-6">
           <div className="rounded-2xl p-6 relative overflow-hidden group bg-gradient-to-b from-white/8 to-white/5 border border-blue-500/30 hover:border-blue-500/60 transition-all">
@@ -313,5 +315,8 @@ export default function ModernAdminDashboard({ userName, onLogout }: AdminDashbo
         </div>
       )}
     </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

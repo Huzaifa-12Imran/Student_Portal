@@ -12,12 +12,12 @@ import {
   Scatter,
 } from "recharts"
 import { useState } from "react"
-import { Users, BookOpen, TrendingUp, CheckCircle2, LogOut, ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Users, BookOpen, TrendingUp, CheckCircle2, ArrowLeft } from "lucide-react"
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
 import MarkAttendance from "@/components/teacher/mark-attendance"
 import UploadMarks from "@/components/teacher/upload-marks"
 import ClassPerformance from "@/components/teacher/class-performance"
-import VerifyResults from "@/components/teacher/verify-results"
 
 const classPerformance = [
   { class: "CS-101", students: 45, avgGrade: 78 },
@@ -44,36 +44,47 @@ export default function ModernTeacherDashboard({ userName, onLogout }: TeacherDa
   const [panel, setPanel] = useState<"cards" | "attendance" | "marks" | "performance" | "verify">("cards")
 
   const openPanelForLabel = (label: string) => {
-    if (label === "Mark Attendance") setPanel("attendance")
-    else if (label === "Upload Marks") setPanel("marks")
-    else if (label === "View Performance") setPanel("performance")
-    else if (label === "Verify Results") setPanel("verify")
+    if (label === "Mark Attendance") window.location.href = "/teacher/attendance"
+    else if (label === "Upload Marks") window.location.href = "/teacher/marks"
+    else if (label === "View Performance") window.location.href = "/teacher/performance"
+    else if (label === "Verify Results") window.location.href = "/teacher/results"
     else setPanel("cards")
   }
 
+  const handleLogout = () => {
+    onLogout()
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background">
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-secondary/15 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-accent/15 rounded-full blur-3xl animate-pulse animation-delay-2000" />
-        </div>
-
-        <div className="relative z-10 px-6 py-12 border-b border-border">
-          <div className="max-w-7xl mx-auto flex justify-between items-start">
-            <div>
-              <h1 className="text-4xl font-bold gradient-text mb-2">Welcome, {userName}</h1>
-              <p className="text-muted-foreground">Manage your classes and track student progress</p>
-            </div>
-            <Button variant="outline" size="sm" onClick={onLogout} className="rounded-lg bg-transparent">
-              <LogOut className="w-4 h-4 mr-2" />
-              Sign Out
-            </Button>
+    <SidebarProvider>
+      <AppSidebar userRole="teacher" userName={userName} onLogout={handleLogout} />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <div className="h-4 w-px bg-sidebar-border" />
+            <h1 className="text-xl font-bold">Teacher Dashboard</h1>
           </div>
-        </div>
-      </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <div className="min-h-screen bg-gradient-to-br from-background via-background to-background">
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-0">
+                <div className="absolute -top-40 -right-40 w-96 h-96 bg-secondary/15 rounded-full blur-3xl animate-pulse" />
+                <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-accent/15 rounded-full blur-3xl animate-pulse animation-delay-2000" />
+              </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-12 space-y-8">
+              <div className="relative z-10 px-6 py-12 border-b border-border">
+                <div className="max-w-7xl mx-auto">
+                  <div>
+                    <h1 className="text-4xl font-bold gradient-text mb-2">Welcome, {userName}</h1>
+                    <p className="text-muted-foreground">Manage your classes and track student progress</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-6 py-12 space-y-8">
         {}
         <div className="grid md:grid-cols-4 gap-4">
           {[
@@ -99,18 +110,7 @@ export default function ModernTeacherDashboard({ userName, onLogout }: TeacherDa
           ))}
         </div>
 
-        {panel !== "cards" && (
-          <div className="mt-6">
-            <button onClick={() => setPanel("cards")} className="text-sm text-primary flex items-center gap-2 mb-4">
-              <ArrowLeft className="w-4 h-4" /> Back to overview
-            </button>
-          </div>
-        )}
 
-        {panel === "attendance" && <MarkAttendance />}
-        {panel === "marks" && <UploadMarks />}
-        {panel === "performance" && <ClassPerformance />}
-        {panel === "verify" && <VerifyResults />}
 
         {}
         <div className="grid md:grid-cols-3 gap-6">
@@ -196,5 +196,8 @@ export default function ModernTeacherDashboard({ userName, onLogout }: TeacherDa
         </div>
       </div>
     </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

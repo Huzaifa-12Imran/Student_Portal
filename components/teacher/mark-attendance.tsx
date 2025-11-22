@@ -73,81 +73,89 @@ export default function MarkAttendance() {
   const lateCount = records.filter((r) => r.status === "late").length
 
   return (
-    <div className="space-y-6 animate-in fade-in-0 slide-in-from-bottom-4 duration-500">
-      {}
-      <div className="bg-card border border-border rounded-lg p-6">
-        <h3 className="font-semibold text-foreground mb-4">Mark Attendance</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">Course</label>
-            <select
-              value={courseId}
-              onChange={(e) => setCourseId(e.target.value)}
-              className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
-            >
-              <option value="CS101">CS101 - Database Systems</option>
-              <option value="CS201">CS201 - Web Development</option>
-              <option value="CS301">CS301 - Data Structures</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">Date</label>
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-          </div>
-          <div className="flex items-end">
-            <button
-              onClick={handleLoadStudents}
-              className="w-full px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              Load Students
-            </button>
-          </div>
+    <div className="space-y-6 animate-in fade-in-0 slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl p-8">
+      <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-700/50">
+        <h2 className="text-2xl font-bold text-white mb-1">Mark Attendance</h2>
+        <p className="text-slate-400 text-sm">Record attendance for your class</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-2">Course</label>
+          <select
+            value={courseId}
+            onChange={(e) => setCourseId(e.target.value)}
+            className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+          >
+            <option value="CS101">CS101 - Database Systems</option>
+            <option value="CS201">CS201 - Web Development</option>
+            <option value="CS301">CS301 - Data Structures</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-2">Date</label>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+          />
+        </div>
+        <div className="flex items-end">
+          <button
+            onClick={handleLoadStudents}
+            className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-lg font-medium transition-all flex items-center justify-center gap-2 shadow-lg"
+          >
+            <Plus className="w-4 h-4" />
+            Load Students
+          </button>
         </div>
       </div>
 
-      {}
       <div className="grid grid-cols-3 gap-4">
-        <div className="bg-card border border-border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground mb-1">Present</p>
-          <p className="text-2xl font-bold text-accent">{presentCount}</p>
+        <div className="bg-gradient-to-br from-slate-800 to-slate-850 border border-slate-700/50 rounded-lg p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-medium text-slate-400">Present</p>
+            <Check className="w-5 h-5 text-green-400" />
+          </div>
+          <p className="text-3xl font-bold text-green-400">{presentCount}</p>
         </div>
-        <div className="bg-card border border-border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground mb-1">Absent</p>
-          <p className="text-2xl font-bold text-destructive">{absentCount}</p>
+        <div className="bg-gradient-to-br from-slate-800 to-slate-850 border border-slate-700/50 rounded-lg p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-medium text-slate-400">Absent</p>
+            <X className="w-5 h-5 text-red-400" />
+          </div>
+          <p className="text-3xl font-bold text-red-400">{absentCount}</p>
         </div>
-        <div className="bg-card border border-border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground mb-1">Late</p>
-          <p className="text-2xl font-bold text-chart-3">{lateCount}</p>
+        <div className="bg-gradient-to-br from-slate-800 to-slate-850 border border-slate-700/50 rounded-lg p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-medium text-slate-400">Late</p>
+            <Clock className="w-5 h-5 text-yellow-400" />
+          </div>
+          <p className="text-3xl font-bold text-yellow-400">{lateCount}</p>
         </div>
       </div>
 
-      {}
-      <div className="bg-card border border-border rounded-lg overflow-hidden">
+      <div className="bg-slate-800/50 border border-slate-700/30 rounded-lg overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-border">
-              <th className="px-6 py-3 text-left text-xs font-semibold text-muted-foreground">Student ID</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-muted-foreground">Name</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-muted-foreground">Status</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-muted-foreground">Actions</th>
+            <tr className="border-b border-slate-700/30 bg-gradient-to-r from-slate-800 to-slate-750">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-slate-300">Student ID</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-slate-300">Name</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-slate-300">Status</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-slate-300">Actions</th>
             </tr>
           </thead>
           <tbody>
             {records.map((record) => (
-              <tr key={record.studentId} className="border-b border-border hover:bg-background/50 transition-colors">
-                <td className="px-6 py-3 text-sm text-muted-foreground">{record.studentId}</td>
-                <td className="px-6 py-3 text-sm text-foreground">{record.name}</td>
-                <td className="px-6 py-3">
+              <tr key={record.studentId} className="border-b border-slate-700/20 hover:bg-slate-700/30 transition-colors">
+                <td className="px-6 py-4 text-sm text-slate-400">{record.studentId}</td>
+                <td className="px-6 py-4 text-sm text-white font-medium">{record.name}</td>
+                <td className="px-6 py-4">
                   <div className="flex gap-2">
                       {(["present", "absent", "late"] as const).map((status) => {
                         const isActive = record.status === status
-                        const common = `inline-flex items-center gap-2 px-3 py-1 rounded text-xs font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2`
+                        const common = `inline-flex items-center gap-2 px-3 py-1.5 rounded text-xs font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2`
                         const attrs = {
                           onClick: () => handleStatusChange(record.studentId, status),
                           'aria-pressed': isActive,
@@ -162,8 +170,8 @@ export default function MarkAttendance() {
                               className={
                                 common +
                                 (isActive
-                                  ? " bg-green-950/30 border border-white text-white"
-                                  : " bg-green-950/30 border border-green-700/50 text-green-400 hover:bg-green-950/50")
+                                  ? " bg-green-500/20 border border-green-400 text-green-400"
+                                  : " bg-green-500/10 border border-green-500/30 text-green-400 hover:bg-green-500/20")
                               }
                             >
                               <Check className="w-3 h-3" />
@@ -180,8 +188,8 @@ export default function MarkAttendance() {
                               className={
                                 common +
                                 (isActive
-                                  ? " bg-red-950/30 border border-white text-white"
-                                  : " bg-red-950/30 border border-red-700/50 text-red-400 hover:bg-red-950/50")
+                                  ? " bg-red-500/20 border border-red-400 text-red-400"
+                                  : " bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20")
                               }
                             >
                               <X className="w-3 h-3" />
@@ -197,8 +205,8 @@ export default function MarkAttendance() {
                             className={
                               common +
                               (isActive
-                                ? " bg-yellow-950/30 border border-white text-white"
-                                : " bg-yellow-950/30 border border-yellow-700/50 text-yellow-400 hover:bg-yellow-950/50")
+                                ? " bg-yellow-500/20 border border-yellow-400 text-yellow-400"
+                                : " bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20")
                             }
                           >
                             <Clock className="w-3 h-3" />
@@ -208,23 +216,10 @@ export default function MarkAttendance() {
                       })}
                   </div>
                 </td>
-                  <td className="px-6 py-3">
-                    <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                        record.status === "present"
-                          ? "bg-green-600/10 text-green-600"
-                          : record.status === "absent"
-                          ? "bg-red-600/10 text-red-600"
-                          : "bg-yellow-500/10 text-yellow-600"
-                      }`}
-                    >
-                      {record.status.charAt(0).toUpperCase() + record.status.slice(1)}
-                    </span>
-                  </td>
-                <td className="px-6 py-3">
+                <td className="px-6 py-4">
                   <button
                     onClick={() => handleDelete(record.studentId)}
-                    className="p-1 text-muted-foreground hover:text-destructive transition-colors"
+                    className="p-2 text-slate-400 hover:text-red-400 transition-colors rounded hover:bg-red-500/10"
                     aria-label={`Delete ${record.name}`}
                   >
                     <Trash2 className="w-4 h-4" />
@@ -236,18 +231,17 @@ export default function MarkAttendance() {
         </table>
       </div>
 
-      {}
-      <div className="flex gap-4">
+      <div className="flex gap-3">
         <button
           onClick={handleSave}
-          className="px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium transition-colors flex items-center gap-2"
+          className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white rounded-lg font-medium transition-all flex items-center gap-2 shadow-lg"
         >
           <Save className="w-4 h-4" />
           Save Attendance
         </button>
         <button
           onClick={handleCancel}
-          className="px-6 py-2.5 bg-input border border-border text-foreground rounded-lg font-medium hover:bg-border transition-colors"
+          className="px-6 py-3 bg-slate-800 border border-slate-700 text-slate-300 rounded-lg font-medium hover:bg-slate-700/50 transition-all"
         >
           Cancel
         </button>
