@@ -1,0 +1,65 @@
+/* Design tokens: warm-professional with cool-modern accents */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Merriweather:wght@300;400;700&display=swap');
+
+:root {
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --font-serif: 'Merriweather', Georgia, 'Times New Roman', serif;
+
+  /* Color palette (warm primary, cool accent) */
+  --color-bg: #FBF9F7; /* soft warm paper */
+  --color-surface: #FFFFFF;
+  --color-muted: #8B8F95;
+  --color-text: #0F1724; /* deep charcoal */
+
+  --color-warm: #D86A49; /* brand warm (terracotta) */
+  --color-warm-600: #c95c3f;
+  --color-warm-800: #8f3e2a;
+
+  --color-cool: #2B8AF7; /* modern cool accent */
+  --color-cool-600: #1f73e6;
+
+  --color-success: #16A34A;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+
+  /* Surfaces & borders */
+  --surface-elev-1: 0 1px 2px rgba(16,24,40,0.04), 0 1px 3px rgba(16,24,40,0.06);
+  --surface-elev-2: 0 6px 18px rgba(16,24,40,0.08);
+  --border-subtle: rgba(16,24,40,0.06);
+
+  /* Radii & spacing */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+
+  /* Motion */
+  --motion-fast: 150ms;
+  --motion-medium: 320ms;
+  --motion-ease: cubic-bezier(.2,.9,.2,1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+    --motion-medium: 0ms;
+    --motion-ease: linear;
+  }
+}
+
+/* dark mode overrides (keeps the warm/cool balance but darker surfaces) */
+.dark {
+  --color-bg: #0b0f13;
+  --color-surface: #071021;
+  --color-muted: #9AA3B2;
+  --color-text: #E6EEF8;
+}
+
+/* Utility tokens for components */
+.theme-shadow {
+  box-shadow: var(--surface-elev-2);
+}
