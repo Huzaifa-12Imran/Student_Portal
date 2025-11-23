@@ -99,7 +99,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\smart\\Downloads\\student-attendance-portal",
+    "outputFileTracingRoot": "c:\\Users\\smart\\Downloads\\student-attendance-portal",
     "cacheComponents": false,
     "cacheLife": {
       "default": {
@@ -289,11 +289,11 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.mjs",
     "turbopack": {
-      "root": "C:\\Users\\smart\\Downloads\\student-attendance-portal"
+      "root": "c:\\Users\\smart\\Downloads\\student-attendance-portal"
     },
     "distDirRoot": ".next"
   },
-  "appDir": "C:\\Users\\smart\\Downloads\\student-attendance-portal",
+  "appDir": "c:\\Users\\smart\\Downloads\\student-attendance-portal",
   "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",

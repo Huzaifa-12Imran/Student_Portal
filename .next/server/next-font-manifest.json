@@ -4,7 +4,75 @@
       "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
       "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
     ],
+    "[project]/app/admin/analytics/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/admin/courses/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/admin/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/admin/students/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/admin/teachers/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/dashboard/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
     "[project]/app/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/student/attendance/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/student/courses/[courseCode]/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/student/courses/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/student/grades/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/student/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/student/schedule/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/teacher/attendance/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/teacher/marks/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/teacher/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/teacher/performance/page": [
+      "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
+      "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
+    ],
+    "[project]/app/teacher/results/page": [
       "static/media/fba5a26ea33df6a3-s.p.1bbdebe6.woff2",
       "static/media/248e1dc0efc99276-s.p.8a6b2436.woff2"
     ]
