@@ -1,27 +1,58 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { ArrowRight, Sparkles, ArrowLeft, CheckCircle2, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useAuth } from "@/lib/auth-context"
 
-interface ModernLoginProps {
-  onLogin: (role: "admin" | "teacher" | "student", name: string) => void
-}
-
-export default function ModernLogin({ onLogin }: ModernLoginProps) {
+export default function ModernLogin() {
+  const { signIn, signUp } = useAuth()
+  const router = useRouter()
+  
+  const [mode, setMode] = useState<"roleSelect" | "signup" | "signin">("roleSelect")
   const [selectedRole, setSelectedRole] = useState<"admin" | "teacher" | "student" | null>(null)
-  const [name, setName] = useState("")
+  const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [department, setDepartment] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const handleLogin = async () => {
-    if (selectedRole && name) {
-      setIsLoading(true)
-      setTimeout(() => {
-        onLogin(selectedRole, name)
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError("")
+
+    try {
+      if (!selectedRole) {
+        setError("Please select a role")
         setIsLoading(false)
-      }, 600)
+        return
+      }
+      await signUp(email, password, fullName, selectedRole, department)
+      setMode("signin")
+      setPassword("")
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign up failed")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError("")
+
+    try {
+      await signIn(email, password)
+      router.push("/dashboard")
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign in failed")
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -31,7 +62,7 @@ export default function ModernLogin({ onLogin }: ModernLoginProps) {
     { role: "admin" as const, title: "Administrator", desc: "System management & analytics" },
   ]
 
-  if (!selectedRole) {
+  if (mode === "roleSelect") {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-background overflow-hidden relative">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -51,14 +82,17 @@ export default function ModernLogin({ onLogin }: ModernLoginProps) {
                 <h1 className="text-5xl font-bold text-transparent bg-gradient-to-r from-blue-300 via-purple-300 to-orange-300 bg-clip-text">AcademiX</h1>
               </div>
               <p className="text-xl text-foreground font-semibold mb-3">Student Attendance & Results Portal</p>
-              <p className="text-muted-foreground text-base max-w-md mx-auto">Welcome to your academic hub. Select your role to access your personalized dashboard.</p>
+              <p className="text-muted-foreground text-base max-w-md mx-auto">Welcome to your academic hub. Select your role to get started.</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 mb-12">
               {roleCards.map(({ role, title, desc }, index) => (
                 <button
                   key={role}
-                  onClick={() => setSelectedRole(role)}
+                  onClick={() => {
+                    setSelectedRole(role)
+                    setMode("signup")
+                  }}
                   className={`group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 hover:scale-105 hover:-translate-y-2 focus:outline-none focus:ring-2 focus:ring-primary/50 animate-fade-up`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
@@ -159,8 +193,6 @@ export default function ModernLogin({ onLogin }: ModernLoginProps) {
     }
   }
 
-  const isFormValid = name.trim().length > 0 && email.trim().length > 0
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-background flex items-center justify-center px-4 relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -172,9 +204,11 @@ export default function ModernLogin({ onLogin }: ModernLoginProps) {
         <div className="rounded-3xl p-8 bg-gradient-to-b from-white/8 to-white/5 border border-primary/30 shadow-2xl">
           <button
             onClick={() => {
-              setSelectedRole(null)
-              setName("")
+              setMode("roleSelect")
               setEmail("")
+              setPassword("")
+              setFullName("")
+              setError("")
             }}
             className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-semibold mb-8 transition-colors hover:gap-3"
           >
@@ -188,23 +222,47 @@ export default function ModernLogin({ onLogin }: ModernLoginProps) {
                 <RoleIcon />
               </div>
               <div>
-                <h2 className="text-3xl font-bold text-foreground">Welcome, {getRoleDisplay()}</h2>
-                <p className="text-muted-foreground text-sm">Sign in to your account</p>
+                <h2 className="text-3xl font-bold text-foreground">{mode === "signup" ? "Create Account" : "Sign In"}</h2>
+                <p className="text-muted-foreground text-sm">{getRoleDisplay()}</p>
               </div>
             </div>
           </div>
 
-          <div className="space-y-5 mb-8">
-            <div>
-              <label className="block text-sm font-semibold text-foreground mb-3">Full Name</label>
-              <Input
-                placeholder="Enter your full name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="bg-white/8 border border-white/15 rounded-xl text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:bg-white/12 transition-all duration-200"
-                disabled={isLoading}
-              />
+          {error && (
+            <div className="mb-6 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 text-sm">
+              {error}
             </div>
+          )}
+
+          <form onSubmit={mode === "signup" ? handleSignUp : handleSignIn} className="space-y-5 mb-8">
+            {mode === "signup" && (
+              <>
+                <div>
+                  <label className="block text-sm font-semibold text-foreground mb-3">Full Name</label>
+                  <Input
+                    type="text"
+                    placeholder="Enter your full name"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="bg-white/8 border border-white/15 rounded-xl text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:bg-white/12 transition-all duration-200"
+                    required
+                    disabled={isLoading}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-foreground mb-3">Department (Optional)</label>
+                  <Input
+                    type="text"
+                    placeholder="e.g., Computer Science"
+                    value={department}
+                    onChange={(e) => setDepartment(e.target.value)}
+                    className="bg-white/8 border border-white/15 rounded-xl text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:bg-white/12 transition-all duration-200"
+                    disabled={isLoading}
+                  />
+                </div>
+              </>
+            )}
+            
             <div>
               <label className="block text-sm font-semibold text-foreground mb-3">Email Address</label>
               <Input
@@ -213,29 +271,60 @@ export default function ModernLogin({ onLogin }: ModernLoginProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="bg-white/8 border border-white/15 rounded-xl text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:bg-white/12 transition-all duration-200"
+                required
                 disabled={isLoading}
               />
             </div>
-          </div>
 
-          <Button
-            onClick={handleLogin}
-            disabled={!isFormValid || isLoading}
-            className="w-full bg-gradient-to-r from-primary via-secondary to-primary hover:shadow-xl hover:shadow-primary/40 rounded-xl py-3 font-semibold text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
-          >
-            <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            {isLoading ? (
-              <div className="flex items-center justify-center gap-2 relative z-10">
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Signing in...
-              </div>
-            ) : (
-              <div className="flex items-center justify-center gap-2 relative z-10">
-                <span>Sign In</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </div>
-            )}
-          </Button>
+            <div>
+              <label className="block text-sm font-semibold text-foreground mb-3">Password</label>
+              <Input
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="bg-white/8 border border-white/15 rounded-xl text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:bg-white/12 transition-all duration-200"
+                required
+                disabled={isLoading}
+              />
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-primary via-secondary to-primary hover:shadow-xl hover:shadow-primary/40 rounded-xl py-3 font-semibold text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {isLoading ? (
+                <div className="flex items-center justify-center gap-2 relative z-10">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  {mode === "signup" ? "Creating account..." : "Signing in..."}
+                </div>
+              ) : (
+                <div className="flex items-center justify-center gap-2 relative z-10">
+                  <span>{mode === "signup" ? "Create Account" : "Sign In"}</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              )}
+            </Button>
+          </form>
+
+          <div className="text-center">
+            <p className="text-muted-foreground text-sm">
+              {mode === "signup" ? "Already have an account? " : "Don't have an account? "}
+              <button
+                onClick={() => {
+                  setMode(mode === "signup" ? "signin" : "signup")
+                  setEmail("")
+                  setPassword("")
+                  setError("")
+                }}
+                className="text-primary hover:text-primary/80 font-semibold"
+              >
+                {mode === "signup" ? "Sign In" : "Sign Up"}
+              </button>
+            </p>
+          </div>
 
           <div className="mt-8 p-4 rounded-xl bg-primary/15 border border-primary/30">
             <div className="flex gap-3 items-start">

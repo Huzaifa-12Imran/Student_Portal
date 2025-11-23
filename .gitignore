@@ -1,2 +1,8 @@
 node_modules
 .next
+.env.local
+.env
+.env.*.local
+.DS_Store
+*.log
+.vercel
